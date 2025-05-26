@@ -1,0 +1,17 @@
+upload file code
+
+from google.colab import files
+uploaded = files.upload()  # Re-upload the file
+-----------------
+convert to text code
+import whisper
+
+# Load the Whisper model
+model = whisper.load_model("base")  # Or use 'small', 'medium', or 'large' for better accuracy
+
+# Transcribe your WAV file
+result = model.transcribe("my_audio (3).wav")  # Replace with your file's name if it's different
+
+# Output the transcribed text
+print("\n✅ Transcribed Text:\n")
+print(result["text"])

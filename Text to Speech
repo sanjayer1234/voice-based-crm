@@ -1,0 +1,23 @@
+!pip install gTTS
+
+from gtts import gTTS
+from IPython.display import Audio
+
+def text_to_speech(text, language='en'):
+    """Converts text to speech using gTTS and plays it in Colab.
+
+    Args:
+        text: The text to convert to speech.
+        language: The language code (e.g., 'en' for English).
+    """
+    tts = gTTS(text=text, lang=language)
+    tts.save("output.mp3")
+    return Audio("output.mp3", autoplay=True)
+
+# Get user input
+user_text = input("Enter the text you want to convert to speech: ")
+
+# Convert to speech and play
+audio_output = text_to_speech(user_text)
+display(audio_output)  # Display the audio player
+

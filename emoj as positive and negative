@@ -1,0 +1,27 @@
+
+from transformers import AutoTokenizer, AutoModelForSequenceClassification
+import torch
+from scipy.special import softmax
+
+# Load model and tokenizer
+model_name = "cardiffnlp/twitter-roberta-base-sentiment"
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+model = AutoModelForSequenceClassification.from_pretrained(model_name)
+
+# Emoji inputs
+emoji_inputs = ["💔"]
+
+# Sentiment labels
+labels = ['negative', 'neutral', 'positive']
+
+# Classify each emoji
+for emoji_input in emoji_inputs:
+    inputs = tokenizer(emoji_input, return_tensors="pt")
+    with torch.no_grad():
+        logits = model(**inputs).logits
+    scores = softmax(logits.numpy()[0])
+    max_idx = scores.argmax()
+    sentiment = labels[max_idx]
+    confidence = scores[max_idx]
+    print(f"Emoji: {emoji_input} => Sentiment: {sentiment.upper()} ({confidence:.2f})")
+
